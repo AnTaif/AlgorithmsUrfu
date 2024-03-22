@@ -86,16 +86,3 @@ public static class Task4
         return arr;
     }
 }
-
-// static int EvaluatePolynomial(int[] coefficients, int x, int mod)
-// {
-//     var result = 0;
-//     var xPow = 1;
-//     for (var i = 0; i < coefficients.Length; i++)
-//     {
-//         result = (result + coefficients[i] * xPow) % mod;
-//         xPow = (xPow * x) % mod;
-//     }
-//         
-//     return result;
-// }
