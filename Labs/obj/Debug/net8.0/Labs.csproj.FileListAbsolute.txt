@@ -9,3 +9,4 @@ C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Lab
 C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\refint\Labs.dll
 C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.pdb
 C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\ref\Labs.dll
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.sourcelink.json

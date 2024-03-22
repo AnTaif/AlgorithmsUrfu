@@ -29,14 +29,89 @@ public static class Task7
         using var writer = new StreamWriter(Path.Combine(rootPath, "Lab2/output7.txt"));
 
         var input = reader.ReadLine()!.Split();
-        var n = input[0];
-        var m = input[1];
+        var n = int.Parse(input[0]);
+        var m = int.Parse(input[1]);
+
+        var segments = new Tuple<int, int>[n];
+        var points = new int[m];
         
-        
+        for (var i = 0; i < n; i++)
+        {
+            var segmentCoords = reader.ReadLine()!.Split();
+            var a = int.Parse(segmentCoords[0]);
+            var b = int.Parse(segmentCoords[1]);
+            segments[i] = new Tuple<int, int>(Math.Min(a, b), Math.Max(a, b));
+        }
+
+        var pointsCoords = reader.ReadLine()!.Split();
+        for (var i = 0; i < m; i++)
+        {
+            var point = int.Parse(pointsCoords[i]);
+            points[i] = point;
+        }
+
+        var result = CountSegments(segments, points);
+
+        writer.WriteLine(string.Join(" ", result));
     }
 
-    public static int[] Solve()
+    public static int[] CountSegments(Tuple<int, int>[] segments, int[] points)
     {
+        QuickSorter.QuickSort(segments, 0, segments.Length - 1);
+
+        var counts = new int[points.Length];
+        for (var i = 0; i < points.Length; i++)
+        {
+            var point = points[i];
+            var count = 0;
+
+            foreach (var segment in segments)
+            {
+                if (InBounds(segment, point))
+                    count++;
+                else if (point < segment.Item1)
+                    break;
+            }
+
+            counts[i] = count;
+        }
+
+        return counts;
+    }
+
+    private static bool InBounds(Tuple<int, int> segment, int point) =>
+        point >= segment.Item1 && point <= segment.Item2;
+}
+
+public static class QuickSorter
+{
+    public static void QuickSort(Tuple<int, int>[] arr, int low, int high)
+    {
+        if (low >= high) return;
         
-    } 
+        var pi = Partition(arr, low, high);
+        QuickSort(arr, low, pi - 1);
+        QuickSort(arr, pi + 1, high);
+    }
+
+    private static int Partition(Tuple<int, int>[] arr, int low, int high)
+    {
+        var pivot = arr[high].Item1;
+        var i = low - 1;
+
+        for (var j = low; j <= high - 1; j++)
+        {
+            if (arr[j].Item1 >= pivot) continue;
+            
+            i++;
+            Swap(arr, i, j);
+        }
+        Swap(arr, i + 1, high);
+        return i + 1;
+    }
+    
+    private static void Swap(Tuple<int, int>[] arr, int i, int j)
+    {
+        (arr[i], arr[j]) = (arr[j], arr[i]);
+    }
 }
