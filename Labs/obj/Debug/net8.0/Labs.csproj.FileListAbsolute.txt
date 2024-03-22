@@ -1,0 +1,11 @@
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\bin\Debug\net8.0\Labs.deps.json
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\bin\Debug\net8.0\Labs.dll
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\bin\Debug\net8.0\Labs.pdb
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.AssemblyInfoInputs.cache
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.AssemblyInfo.cs
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.csproj.CoreCompileInputs.cache
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.dll
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\refint\Labs.dll
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\Labs.pdb
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Labs\obj\Debug\net8.0\ref\Labs.dll
