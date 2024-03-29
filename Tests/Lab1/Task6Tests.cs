@@ -27,7 +27,7 @@ public class Task6Tests
     [Fact]
     public void WhenZeroDifference()
     {
-        int[] arr = { 3, 1, 2, 4 };
+        int[] arr = { 1, 2, 3 };
 
         var result = Task6.FindMinDifference(arr);
 

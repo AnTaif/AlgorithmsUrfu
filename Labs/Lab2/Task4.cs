@@ -34,13 +34,18 @@ public static class Task4
         var m = int.Parse(input[2]);
         var l = int.Parse(input[3]);
 
+        var sum = Solve(n, k, m, l);
+        
+        Console.WriteLine(sum);
+    }
+
+    public static int Solve(int n, int k, int m, int l)
+    {
         var arr = GenerateArray(n, k, m, l);
         var sortedArr = CountingSort(arr);
         var sum = OddSum(sortedArr, l);
         
-        Console.WriteLine(string.Join(" ", arr));
-        Console.WriteLine(string.Join(" ", sortedArr));
-        Console.WriteLine(sum);
+        return sum;
     }
 
     public static int OddSum(int[] sortedArr, int l)
@@ -57,7 +62,8 @@ public static class Task4
     {
         var n = arr.Length;
         
-        var max = 0;
+        // можно поменять max на значение L (max всегда меньше L)
+        var max = 0; 
         foreach (var a in arr)
             max = Math.Max(max, a);
 

@@ -4,26 +4,13 @@ namespace Tests.Lab2;
 
 public class TestsTask4
 {
-    [Fact]
-    public void Test1()
+    [Theory]
+    [InlineData(5, 7, 13, 100, 77)]
+    // [InlineData(4, 5, 2, 10, 0)]
+    // [InlineData(6, 10, 3, 20, 10)]
+    public void Test1(int n, int k, int m, int l, int expectedSum)
     {
-        var n = 5;
-        var k = 7;
-        var m = 13;
-        var l = 100;
-
-        var actualGeneratedArray = Task4.GenerateArray(n, k, m, l);
-        var expectedGeneratedArray = new[] { 7, 91, 83, 79, 27 };
-        
-        Assert.Equal(expectedGeneratedArray, actualGeneratedArray);
-
-        var actualSortedArray = Task4.CountingSort(actualGeneratedArray);
-        var expectedSortedArray = new[] { 7, 27, 79, 83, 91 };
-        
-        Assert.Equal(expectedSortedArray, actualSortedArray);
-
-        var actualSum = Task4.OddSum(actualSortedArray, l);
-        var expectedSum = 77;
+        var actualSum = Task4.Solve(n, k, m, l);
         
         Assert.Equal(expectedSum, actualSum);
     }

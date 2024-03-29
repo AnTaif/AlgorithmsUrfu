@@ -100,3 +100,4 @@ C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Tests\obj\Debug\net8.0\re
 C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Tests\obj\Debug\net8.0\Tests.pdb
 C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Tests\obj\Debug\net8.0\Tests.genruntimeconfig.cache
 C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Tests\obj\Debug\net8.0\ref\Tests.dll
+C:\Users\gavri\Programming\Алгосы\AlgorithmsUrfu\Tests\obj\Debug\net8.0\Tests.sourcelink.json

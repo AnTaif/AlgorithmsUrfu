@@ -20,16 +20,19 @@ namespace Labs.Lab2;
 
 public static class Task6
 {
-    private static string rootPath = Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName;
+    private static readonly string RootPath = Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName;
+    
+    private const string Start = "start";
+    private const string End = "end";
     
     public static void Run()
     {
-        using var reader = new StreamReader(Path.Combine(rootPath, "Lab2/input6.txt"));
-        using var writer = new StreamWriter(Path.Combine(rootPath, "Lab2/output6.txt"));
+        using var reader = new StreamReader(Path.Combine(RootPath, "Lab2/input6.txt"));
+        using var writer = new StreamWriter(Path.Combine(RootPath, "Lab2/output6.txt"));
         
         var n = int.Parse(reader.ReadLine()!);
 
-        var visits = new List<(int Arrival, int Departure)>();
+        var visits = new List<(int Time, string Type)>();
 
         for (var i = 0; i < n; i++)
         {
@@ -37,32 +40,58 @@ public static class Task6
             var arrivalTime = input[0].Split(':');
             var departureTime = input[1].Split(':');
 
-            var arrival = int.Parse(arrivalTime[0]) * 60 + int.Parse(arrivalTime[1]);
-            var departure = int.Parse(departureTime[0]) * 60 + int.Parse(departureTime[1]);
-
-            visits.Add((arrival, departure));
+            visits.Add((int.Parse(arrivalTime[0]) * 60 + int.Parse(arrivalTime[1]), Start));
+            visits.Add((int.Parse(departureTime[0]) * 60 + int.Parse(departureTime[1]), End));
         }
 
-        visits.Sort();
+        QuickSorter.QuickSort(visits, 0, visits.Count - 1);
 
         var maxVisitors = 0;
         var currentVisitors = 0;
-        
-        var baseVisit = visits[0];
 
         foreach (var visit in visits)
         {
-            if (visit.Departure >= visit.Arrival)
-                while (visits.Count > 0 && baseVisit.Arrival <= visit.Departure)
-                {
-                    currentVisitors++;
-                    baseVisit = visits[0];
-                }
+            if (visit.Type == Start)
+                currentVisitors++;
+            else
+                currentVisitors--;
 
-            if (currentVisitors > maxVisitors)
-                maxVisitors = currentVisitors;
+            maxVisitors = Math.Max(currentVisitors, maxVisitors);
         }
         
         writer.WriteLine(maxVisitors);
-    } 
+    }
+    
+    public static class QuickSorter
+    {
+        public static void QuickSort(List<(int, string)> list, int low, int high)
+        {
+            if (low >= high) return;
+        
+            var pi = Partition(list, low, high);
+            QuickSort(list, low, pi - 1);
+            QuickSort(list, pi + 1, high);
+        }
+
+        private static int Partition(List<(int, string)> list, int low, int high)
+        {
+            var pivot = list[high].Item1;
+            var i = low - 1;
+
+            for (var j = low; j <= high - 1; j++)
+            {
+                if (list[j].Item1 >= pivot) continue;
+            
+                i++;
+                Swap(list, i, j);
+            }
+            Swap(list, i + 1, high);
+            return i + 1;
+        }
+    
+        private static void Swap(List<(int, string)> list, int i, int j)
+        {
+            (list[i], list[j]) = (list[j], list[i]);
+        }
+    }
 }

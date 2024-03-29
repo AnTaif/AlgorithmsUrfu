@@ -36,19 +36,19 @@ public static class Task8
         using var writer = new StreamWriter(Path.Combine(rootPath, "Lab2/output8.txt"));
 
         var k = int.Parse(reader.ReadLine()!);
-        var arr = new List<Tuple<int, int>>[k];
+        var arr = new List<(int, int)>[k];
 
         for (var i = 0; i < k; i++)
         {
             var inputTest = reader.ReadLine()!.Split();
             var n = int.Parse(inputTest[0]);
 
-            arr[i] = new List<Tuple<int, int>>(n);
+            arr[i] = new List<(int, int)>(n);
             
             for (var j = 0; j < n; j++)
             {
                 var index = j * 2 + 1;
-                var inputTuple = new Tuple<int, int>(int.Parse(inputTest[index]), int.Parse(inputTest[index+1]));
+                var inputTuple = (int.Parse(inputTest[index]), int.Parse(inputTest[index+1]));
 
                 arr[i].Add(inputTuple);
             }
@@ -61,11 +61,11 @@ public static class Task8
         }
     }
 
-    public static bool Solve(Tuple<int, int>[] periods)
+    public static bool Solve((int, int)[] periods)
     {
         var prevEnd = 0;
         
-        QuickSorter.QuickSort(periods, 0, periods.Length - 1);
+        Task7.QuickSorter.QuickSort(periods, 0, periods.Length - 1);
 
         for (var i = 0; i < periods.Length; i++)
         {
