@@ -38,7 +38,7 @@ public static class Task2
 
     public static int[] Solve(string[] commandLines)
     {
-        var queue = new Queue();
+        var queue = new Queue<int>();
         var removedNumbers = new List<int>();
         
         foreach (var commandLine in commandLines)
@@ -66,14 +66,14 @@ public static class Task2
     }
 }
 
-public class Queue
+public class Queue<T>
 {
-    private Node? _head;
-    private Node? _tail;
+    private Node<T>? _head;
+    private Node<T>? _tail;
 
-    public void Enqueue(int data)
+    public void Enqueue(T data)
     {
-        var newNode = new Node(data);
+        var newNode = new Node<T>(data);
         if (_tail == null)
         {
             _head = newNode;
@@ -86,7 +86,7 @@ public class Queue
         }
     }
 
-    public int Dequeue()
+    public T Dequeue()
     {
         if (_head == null)
             throw new InvalidOperationException("Queue is empty");
@@ -101,8 +101,8 @@ public class Queue
     }
 }
 
-public class Node(int data)
+public class Node<T>(T data)
 {
-    public int Data { get; set; } = data;
-    public Node? Next { get; set; }
+    public T Data { get; set; } = data;
+    public Node<T>? Next { get; set; }
 }
