@@ -24,7 +24,6 @@ public static class Task13
 {
     public static void Run()
     {
-        _ = int.Parse(Console.ReadLine()!);
         var postfixInput = Console.ReadLine()!;
 
         var result = Solve(postfixInput);

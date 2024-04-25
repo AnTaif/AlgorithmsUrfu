@@ -85,13 +85,11 @@ public static class Task14
             UpdateCityTop(moneyCities, cityTop, previousDay, currentDay);
 
             var oldCity = personDictionary[name].City;
-            
             RemoveMoneyCity(moneyCities, oldCity, cityMoney[oldCity]);
             cityMoney[oldCity] -= personDictionary[name].Money;
             AddMoneyCity(moneyCities, cityMoney, oldCity, cityMoney[oldCity]);
             
             cityMoney.TryAdd(city, 0);
-            
             RemoveMoneyCity(moneyCities, city, cityMoney[city]);
             cityMoney[city] += personDictionary[name].Money;
             AddMoneyCity(moneyCities, cityMoney, city, cityMoney[city]);
@@ -122,17 +120,17 @@ public static class Task14
     }
 
     private static void AddMoneyCity(
-        SortedDictionary<long, HashSet<string>> moneyCities, 
+        SortedDictionary<long, HashSet<string>> moneyCities,
         Dictionary<string, long> cityMoney,
         string city, long money)
     {
         if (!moneyCities.ContainsKey(cityMoney[city]))
             moneyCities[money] = new HashSet<string>();
-        
+
         moneyCities[cityMoney[city]].Add(city);
-        
+
     }
-    
+
     private static void UpdatePersonData(
         Dictionary<string, long> cityMoney, 
         SortedDictionary<long, HashSet<string>> moneyCities, 
