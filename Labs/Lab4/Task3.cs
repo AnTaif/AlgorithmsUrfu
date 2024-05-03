@@ -89,6 +89,7 @@ public static class Task3
     }
 }
 
+// Бинарное дерево
 class PhoneBook
 {
     private PhoneBookNode? root;

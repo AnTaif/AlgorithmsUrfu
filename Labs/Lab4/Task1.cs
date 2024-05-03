@@ -69,7 +69,7 @@ public static class Task1
                     break;
                 }
                 default: 
-                    throw new ArgumentException("");
+                    throw new ArgumentException("Неизвестный код запроса: " + code);
             }
         }
 
@@ -77,6 +77,7 @@ public static class Task1
     }
 }
 
+// Дерево отрезков
 class SegmentTree
 {
     private readonly int[] _array;

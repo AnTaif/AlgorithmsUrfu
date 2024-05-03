@@ -67,6 +67,7 @@ public static class Task2
     }
 }
 
+// Префиксное дерево
 class Trie
 {
     private readonly TrieNode _root = new();

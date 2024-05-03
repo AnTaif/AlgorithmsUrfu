@@ -51,6 +51,7 @@ public static class Task4
     }
 }
 
+// Префиксное дерево
 class AnagramTrie
 {
     private readonly AnagramNode root = new();
