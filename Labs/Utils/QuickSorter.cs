@@ -7,28 +7,28 @@ public static class QuickSorter
         if (array.Length == 0)
             return;
 
-        Sort(array, Comparer<T>.Default);
+        Sort(array, (x, y) => x.CompareTo(y));
     }
 
-    private static void Sort<T>(T[] array, Comparer<T> comparer) => Sort(array, 0, array.Length - 1, comparer);
+    public static void Sort<T>(T[] array, Comparison<T> comparison) => Sort(array, 0, array.Length - 1, comparison);
     
-    private static void Sort<T>(T[] array, int left, int right, Comparer<T> comparer)
+    private static void Sort<T>(T[] array, int left, int right, Comparison<T> comparison)
     {
         if (left >= right) return;
         
-        var pivotIndex = Partition(array, left, right, comparer);
-        Sort(array, left, pivotIndex - 1, comparer);
-        Sort(array, pivotIndex + 1, right, comparer);
+        var pivotIndex = Partition(array, left, right, comparison);
+        Sort(array, left, pivotIndex - 1, comparison);
+        Sort(array, pivotIndex + 1, right, comparison);
     }
 
-    private static int Partition<T>(T[] array, int left, int right, Comparer<T> comparer)
+    private static int Partition<T>(T[] array, int left, int right, Comparison<T> comparison)
     {
         var pivot = array[right];
         var i = left - 1;
 
         for (var j = left; j < right; j++)
         {
-            if (comparer.Compare(array[j], pivot) <= 0)
+            if (comparison(array[j], pivot) <= 0)
             {
                 i++;
                 Swap(array, i, j);

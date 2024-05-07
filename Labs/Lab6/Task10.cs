@@ -1,4 +1,5 @@
 using System.Globalization;
+using Labs.Utils;
 
 namespace Labs.Lab6;
 
@@ -52,7 +53,7 @@ public static class Task10
     public static (double Time, int[] Numbers) Solve(Sheet[] sheets)
     {
         // Сортируем по уменьшению времени разъедания первой жидкостью
-        Array.Sort(sheets, (sheet1, sheet2) => (sheet2.A / sheet2.B).CompareTo(sheet1.A / sheet1.B));
+        QuickSorter.Sort(sheets, (sheet1, sheet2) => (sheet2.A / sheet2.B).CompareTo(sheet1.A / sheet1.B));
         
         var totalTime = sheets.Sum(sheet => sheet.A);
         double maxTime = 0;

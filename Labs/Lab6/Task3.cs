@@ -1,3 +1,5 @@
+using Labs.Utils;
+
 namespace Labs.Lab6;
 
 /*
@@ -30,7 +32,7 @@ public static class Task3
 
     public static int Solve(int L, int[] points)
     {
-        Array.Sort(points); // Сортируем точки по координатам
+        QuickSorter.Sort(points); // Сортируем точки по координатам
 
         var lastPoint = points[0];
         var count = 1;
