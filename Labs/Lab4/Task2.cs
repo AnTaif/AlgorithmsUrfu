@@ -1,3 +1,5 @@
+using Labs.Utils;
+
 namespace Labs.Lab4;
 
 /*
@@ -47,8 +49,8 @@ public static class Task2
         // Вставка эталонных множеств
         foreach (var s in sets)
         {
-            var set = s.Split().Select(int.Parse).ToList();
-            set.Sort();
+            var set = s.Split().Select(int.Parse).ToArray();
+            QuickSorter.Sort(set);
             
             trie.Insert(set.ToArray());
         }

@@ -2,33 +2,42 @@ namespace Labs.Utils;
 
 public static class QuickSorter
 {
-    public static void QuickSort(int[] arr, int low, int high)
+    public static void Sort<T>(T[] array) where T : IComparable<T>
     {
-        if (low >= high) return;
-        
-        var pi = Partition(arr, low, high);
-        QuickSort(arr, low, pi - 1);
-        QuickSort(arr, pi + 1, high);
+        if (array.Length == 0)
+            return;
+
+        Sort(array, Comparer<T>.Default);
     }
 
-    private static int Partition(int[] arr, int low, int high)
+    private static void Sort<T>(T[] array, Comparer<T> comparer) => Sort(array, 0, array.Length - 1, comparer);
+    
+    private static void Sort<T>(T[] array, int left, int right, Comparer<T> comparer)
     {
-        var pivot = arr[high];
-        var i = low - 1;
+        if (left >= right) return;
+        
+        var pivotIndex = Partition(array, left, right, comparer);
+        Sort(array, left, pivotIndex - 1, comparer);
+        Sort(array, pivotIndex + 1, right, comparer);
+    }
 
-        for (var j = low; j <= high - 1; j++)
+    private static int Partition<T>(T[] array, int left, int right, Comparer<T> comparer)
+    {
+        var pivot = array[right];
+        var i = left - 1;
+
+        for (var j = left; j < right; j++)
         {
-            if (arr[j] >= pivot) continue;
-            
-            i++;
-            Swap(arr, i, j);
+            if (comparer.Compare(array[j], pivot) <= 0)
+            {
+                i++;
+                Swap(array, i, j);
+            }
         }
-        Swap(arr, i + 1, high);
+
+        Swap(array, i + 1, right);
         return i + 1;
     }
-    
-    private static void Swap(int[] arr, int i, int j)
-    {
-        (arr[i], arr[j]) = (arr[j], arr[i]);
-    }
+
+    private static void Swap<T>(T[] array, int i, int j) => (array[i], array[j]) = (array[j], array[i]);
 }

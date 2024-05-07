@@ -1,3 +1,5 @@
+using Labs.Utils;
+
 namespace Labs.Lab4;
 
 /*
@@ -43,7 +45,7 @@ public static class Task4
         foreach (var word in words)
         {
             var characters = word.ToCharArray();
-            Array.Sort(characters);
+            QuickSorter.Sort(characters);
             trie.Insert(new string(characters));
         }
         

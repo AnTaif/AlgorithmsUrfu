@@ -29,7 +29,7 @@ public static class Task6
 
     public static int FindMinDifference(int[] arr)
     {
-        QuickSorter.QuickSort(arr, 0, arr.Length - 1);
+        QuickSorter.Sort(arr);
 
         var left = 1;
         var right = arr.Length - 1;
