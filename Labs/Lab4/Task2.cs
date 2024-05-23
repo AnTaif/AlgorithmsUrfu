@@ -90,10 +90,10 @@ class Trie
         var current = _root;
         foreach (var num in set)
         {
-            if (!current.Children.ContainsKey(num))
+            if (!current.Children.TryGetValue(num, out var value))
                 return false;
             
-            current = current.Children[num];
+            current = value;
         }
         return current.IsEnd;
     }

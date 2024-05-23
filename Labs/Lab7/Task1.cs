@@ -23,27 +23,32 @@ public static class Task1
 {
     public static void Run()
     {
-        int N = int.Parse(Console.ReadLine()!);
+        var N = int.Parse(Console.ReadLine()!);
         Console.WriteLine(Solve(N));
     }
 
     public static string Solve(int N)
     {
-        bool[] canWin = new bool[N + 1];
+        // Массив для хранения выигрышных и проигрышных позиций
+        var dp = new bool[N + 1];
 
-        for (int i = N; i > 0; i--)
+        // Заполнение массива динамического программирования
+        for (var i = 1; i <= N; i++)
         {
-            int sqrt = (int)Math.Sqrt(i);
-            for (int k = sqrt; k >0; k--)
+            // Определяем количество фишек, которое можно взять (целая часть квадратного корня)
+            var maxTake = (int)Math.Sqrt(i);
+            
+            // Проверяем все возможные ходы
+            for (var take = 1; take <= maxTake; take++)
             {
-                if (!canWin[i - k*k])
+                if (!dp[i - take])
                 {
-                    canWin[i] = true;
+                    dp[i] = true;
                     break;
                 }
             }
         }
 
-        return canWin[N] ? "First" : "Second";
+        return dp[N] ? "Second" : "First";
     }
 }

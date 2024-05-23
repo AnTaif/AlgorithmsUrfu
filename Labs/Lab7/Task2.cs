@@ -37,103 +37,76 @@ public static class Task2
 {
     public static void Run()
     {
-        string[] routes = {
-            "3 4 6 2 8 6",
-            "6 1 8 2 7 4",
-            "5 9 3 9 9 5",
-            "8 4 1 3 9 6",
-            "3 7 2 8 6 4",
-            // "1 7 4 3",
-            // "5 1 6 7",
-            // "4 1 9 2",
-            // "7 3 7 5",
-            // "8 2 4 1",
-        };
+        var firstLine = Console.ReadLine()!.Split();
+        var N = int.Parse(firstLine[0]);
+        var M = int.Parse(firstLine[1]);
         
-        var result = Solve(routes);
+        var costs = new int[N, M];
+        for (var i = 0; i < N; i++)
+        {
+            var line = Console.ReadLine()!.Split();
+            for (var j = 0; j < M; j++)
+            {
+                costs[i, j] = int.Parse(line[j]);
+            }
+        }
         
-        Console.WriteLine(string.Join(" ", result.Cities.Select(c => c + 1)));
+        var result = Solve(costs, N, M);
+        Console.WriteLine(string.Join(" ", result.Cities));
         Console.WriteLine(result.Cost);
     }
 
-    public static (int[] Cities, int Cost) Solve(string[] routes)
+    public static (int[] Cities, int Cost) Solve(int[,] costs, int N, int M)
     {
-        int n = routes.Length;
-        int m = routes[0].Split().Length;
-
-        // Массив для хранения минимальной стоимости посещения каждого города из каждого множества
-        int[,] dp = new int[n, m];
-
-        // Заполняем массив dp снизу вверх, начиная с последнего множества
-        for (int i = n - 1; i >= 0; i--)
+        var dp = new int[N, M];
+        var path = new int[N, M];
+        
+        for (var i = 0; i < N; i++)
         {
-            string[] costs = routes[i].Split();
-            for (int j = 0; j < m; j++)
+            dp[i, 0] = costs[i, 0];
+            path[i, 0] = -1; // старт
+        }
+        
+        for (var j = 1; j < M; j++)
+        {
+            for (var i = 0; i < N; i++)
             {
-                int currentCost = int.Parse(costs[j]);
-
-                // Если это последнее множество, то минимальная стоимость равна просто стоимости города
-                if (i == n - 1)
+                dp[i, j] = int.MaxValue;
+                for (var k = -1; k <= 1; k++)
                 {
-                    dp[i, j] = currentCost;
-                }
-                else
-                {
-                    int minCost = int.MaxValue;
-                    // Перебираем все возможные следующие города из следующего множества
-                    for (int k = -1; k <= 1; k++)
+                    var prevRow = i + k;
+                    if (prevRow >= 0 && prevRow < N)
                     {
-                        int nextRow = i + 1;
-                        int nextColumn = j + k;
-
-                        // Проверяем, что следующий город существует в следующем множестве
-                        if (nextColumn >= 0 && nextColumn < m && nextRow < n)
+                        var newCost = dp[prevRow, j - 1] + costs[i, j];
+                        if (newCost < dp[i, j] || (newCost == dp[i, j] && prevRow < path[i, j]))
                         {
-                            // Обновляем минимальную стоимость
-                            minCost = Math.Min(minCost, dp[nextRow, nextColumn]);
+                            dp[i, j] = newCost;
+                            path[i, j] = prevRow;
                         }
                     }
-                    // Минимальная стоимость для текущего города
-                    dp[i, j] = currentCost + minCost;
                 }
             }
         }
 
-        // Находим минимальную стоимость маршрута и сам маршрут
-        int minTotalCost = int.MaxValue;
-        int[] cities = new int[n];
-        int minStartCity = 0;
-        for (int j = 0; j < m; j++)
+        var minCost = int.MaxValue;
+        var lastCity = -1;
+        
+        for (var i = 0; i < N; i++)
         {
-            if (dp[0, j] < minTotalCost)
+            if (dp[i, M - 1] < minCost)
             {
-                minTotalCost = dp[0, j];
-                minStartCity = j;
+                minCost = dp[i, M - 1];
+                lastCity = i;
             }
         }
-
-        cities[0] = minStartCity;
-        int currentCity = minStartCity;
-        for (int i = 1; i < n; i++)
+        
+        var cities = new int[M];
+        for (int j = M - 1, i = lastCity; j >= 0; j--)
         {
-            int minNextCity = currentCity;
-            int minNextCost = int.MaxValue;
-            for (int k = -1; k <= 1; k++)
-            {
-                int nextColumn = currentCity + k;
-                if (nextColumn >= 0 && nextColumn < m)
-                {
-                    if (dp[i, nextColumn] < minNextCost)
-                    {
-                        minNextCost = dp[i, nextColumn];
-                        minNextCity = nextColumn;
-                    }
-                }
-            }
-            cities[i] = minNextCity;
-            currentCity = minNextCity;
+            cities[j] = i + 1;
+            i = path[i, j];
         }
 
-        return (cities, minTotalCost);
+        return (cities, minCost);
     }
 }

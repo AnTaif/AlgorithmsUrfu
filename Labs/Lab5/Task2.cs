@@ -76,14 +76,14 @@ public class Task2
 }
 
 class Database {
-    private readonly Dictionary<string, long> index; // Хеш-таблица для индексации ключей и их позиций в файле
+    private readonly HashTable<string, long> index; // Хеш-таблица для индексации ключей и их позиций в файле
     private readonly string dataFilePath;
 
     private readonly List<string> log = new();
     public List<string> GetLog() => log;
 
     public Database(string filePath) {
-        index = new Dictionary<string, long>();
+        index = new HashTable<string, long>();
         dataFilePath = filePath;
 
         File.Create(dataFilePath).Close();
@@ -96,10 +96,10 @@ class Database {
             return;
         }
 
-        using (var writer = File.AppendText(dataFilePath)) {
-            writer.WriteLine($"{key} {value}");
-            index[key] = writer.BaseStream.Position;
-        }
+        using var writer = File.AppendText(dataFilePath);
+        
+        writer.WriteLine($"{key} {value}");
+        index.Put(key, writer.BaseStream.Position);
     }
 
     // Удаление записи
@@ -125,7 +125,7 @@ class Database {
 
         // Обновление значения в файле
         using (var writer = new StreamWriter(dataFilePath, true)) {
-            var position = index[key];
+            var position = index.Get(key);
             writer.BaseStream.Seek(position, SeekOrigin.Begin);
             writer.Write($"{key} {value}");
         }
@@ -140,7 +140,7 @@ class Database {
 
         // Чтение из файла
         using (var reader = new StreamReader(dataFilePath)) {
-            reader.BaseStream.Seek(index[key], SeekOrigin.Begin);
+            reader.BaseStream.Seek(index.Get(key), SeekOrigin.Begin);
             log.Add(reader.ReadLine()!);
         }
     }

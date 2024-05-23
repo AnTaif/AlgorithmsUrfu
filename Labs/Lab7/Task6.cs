@@ -60,8 +60,7 @@ public static class Task6
             // 2. Начать новую последовательность, начиная с i-го доклада
             dp[i] = Math.Max(dp[i - 1], 1);
 
-            // Проверяем, совместим ли i-ый доклад с предыдущими
-            // в dp[j]
+            // Проверяем, совместим ли i-ый доклад с предыдущими в dp[j]
             for (var j = i - 1; j >= 0; j--)
             {
                 if (reports[j].End <= reports[i].Start)
@@ -71,7 +70,6 @@ public static class Task6
             }
         }
 
-        // Возвращаем максимальное количество докладов
         return dp[reports.Length - 1];
     }
 }

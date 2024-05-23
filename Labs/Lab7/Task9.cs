@@ -60,15 +60,10 @@ public static class Task9
             }
         }
         
-        // Добавляем 0 и максимально значение 10^N
+        // Добавляем 0 и максимальное значение 10^N
         dp[0, N] = 1;
         dp[1, N] += 1;
 
-        return GetFunctionResult(dp, s);
-    }
-
-    private static int GetFunctionResult(int[,] dp, int s)
-    {
         var result = 0;
         for (var i = 1; i <= N; i++)
         {

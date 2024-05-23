@@ -16,7 +16,7 @@ namespace Labs.Lab5;
 	длины 5: abcab
 	В строках длины 1 есть два повторяющихся элемента — a и b. 
 	Назовем весом подстрок длины L произведение максимального количества повторяющихся подстрок этой длины на длину L.
-	В нашем случае вес длины 1 есть 2 (2*1), длины 2 есть 4 (2*2), длины 3 — 3 (1*3), длины 4 — 4 и длины 5 — 5.
+	В нашем случае вес длины 1 есть 2 (2*1), длины 2 есть 4 (2*2), длины 3 — 1 (1*3), длины 4 — 1 и длины 5 — 1.
 	Требуется найти наибольший из всех весов различных длин.
 */
 
@@ -48,7 +48,7 @@ public static class Task1
 				else
 					substrings[substring] = 1;
 
-				if (weights.TryGetValue(length, out int value))
+				if (weights.TryGetValue(length, out var value))
 				{
 					weights[length] = Math.Max(value, substrings[substring]);
 				}

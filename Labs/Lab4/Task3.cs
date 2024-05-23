@@ -27,19 +27,12 @@ public static class Task3
 {
     public static void Run()
     {
-        var commands = new[]
-        {
-            "ADD IVAN 1178927",
-            "PRINT PETER",
-            "ADD EGOR 123412",
-            "PRINT IVAN",
-            "EDITPHONE IVAN 112358",
-            "PRINT IVAN",
-            "PRINT EGOR",
-            "DELETE EGOR",
-            "EDITPHONE EGOR 123456",
-        };
+        var n = int.Parse(Console.ReadLine()!);
+        var commands = new string[n];
 
+        for (var i = 0; i < n; i++)
+            commands[i] = Console.ReadLine()!;
+        
         var log = Solve(commands);
         
         foreach (var logValue in log)
