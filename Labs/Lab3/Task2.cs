@@ -70,10 +70,12 @@ public class Queue<T>
 {
     private Node<T>? _head;
     private Node<T>? _tail;
+    public int Count { get; private set; }
 
     public void Enqueue(T data)
     {
         var newNode = new Node<T>(data);
+        Count++;
         if (_tail == null)
         {
             _head = newNode;
@@ -97,6 +99,7 @@ public class Queue<T>
         if (_head == null)
             _tail = null;
 
+        Count--;
         return removedItem;
     }
 }

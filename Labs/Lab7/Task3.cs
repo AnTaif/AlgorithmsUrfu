@@ -35,7 +35,8 @@ public static class Task3
         {
             for (var j = 1; j <= line2.Length; j++)
             {
-                if (line1[i - 1] != line2[j - 1]) continue;
+                if (line1[i - 1] != line2[j - 1]) 
+                    continue;
                 
                 dp[i, j] = dp[i - 1, j - 1] + 1;
 

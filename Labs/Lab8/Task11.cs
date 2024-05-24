@@ -90,40 +90,15 @@ public static class Task11
         (double, double) pointA, 
         (double, double) pointB)
     {
-        // Total number of vertices in the graph: n stations + 2 points (A and B)
         var totalVertices = n + 2;
 
-        // Adjacency list to store the graph
         var adj = new List<(int To, double Weight)>[totalVertices];
         for (var i = 0; i < totalVertices; i++)
             adj[i] = new List<(int To, double Weight)>();
 
-        // Add edges between stations based on metro connections
-        foreach (var (from, to) in edges)
-        {
-            var distance = GetDistance(stations[from], stations[to]);
-            var time = distance / metroSpeed;
-            AddEdge(from, to, time);
-        }
+        AddEdges(adj, n, walkSpeed, metroSpeed, stations, edges, pointA, pointB);
 
-        // Add edges from point A to all stations and to point B
-        for (var i = 0; i < n; i++)
-        {
-            var distanceToA = GetDistance(pointA, stations[i]);
-            var timeToA = distanceToA / walkSpeed;
-            AddEdge(n, i, timeToA);
-
-            var distanceToB = GetDistance(pointB, stations[i]);
-            var timeToB = distanceToB / walkSpeed;
-            AddEdge(n + 1, i, timeToB);
-        }
-
-        // Add direct edge from point A to point B
-        var directDistance = GetDistance(pointA, pointB);
-        var directTime = directDistance / walkSpeed;
-        AddEdge(n, n + 1, directTime);
-
-        // Perform Dijkstra's algorithm from point A (index n) to point B (index n + 1)
+        // Алгорит Дейкстры от точки А до точки Б
         var dist = new double[totalVertices];
         var prev = new int[totalVertices];
         var visited = new bool[totalVertices];
@@ -160,7 +135,7 @@ public static class Task11
             }
         }
 
-        // Reconstruct the path
+        // Восстанавливаю путь
         var path = new List<int>();
         for (var at = n + 1; at != -1; at = prev[at])
         {
@@ -171,12 +146,46 @@ public static class Task11
 
         return (dist[n + 1], path.ToArray());
 
-        // Function to add an edge to the graph
-        void AddEdge(int from, int to, double weight)
+        // Добавляю соединения в граф
+    }
+
+    private static void AddEdges(List<(int To, double Weight)>[] adj, 
+        int n, double walkSpeed, double metroSpeed,
+        (double X, double Y)[] stations, 
+        List<(int From, int To)> edges, 
+        (double, double) pointA, 
+        (double, double) pointB)
+    {
+        // Добавляю соединения между станициями
+        foreach (var (from, to) in edges)
         {
-            adj[from].Add((to, weight));
-            adj[to].Add((from, weight));
+            var distance = GetDistance(stations[from], stations[to]);
+            var time = distance / metroSpeed;
+            AddEdge(adj, from, to, time);
         }
+
+        // Добавляю соединения от точки А до всех станция и до точки Б
+        for (var i = 0; i < n; i++)
+        {
+            var distanceToA = GetDistance(pointA, stations[i]);
+            var timeToA = distanceToA / walkSpeed;
+            AddEdge(adj, n, i, timeToA);
+
+            var distanceToB = GetDistance(pointB, stations[i]);
+            var timeToB = distanceToB / walkSpeed;
+            AddEdge(adj, n + 1, i, timeToB);
+        }
+
+        // Добавляю прямое соединения от точки А до точки Б
+        var directDistance = GetDistance(pointA, pointB);
+        var directTime = directDistance / walkSpeed;
+        AddEdge(adj, n, n + 1, directTime);
+    }
+
+    private static void AddEdge(List<(int To, double Weight)>[] adj, int from, int to, double weight)
+    {
+        adj[from].Add((to, weight));
+        adj[to].Add((from, weight));
     }
 
     private static double GetDistance((double X, double Y) point1, (double X, double Y) point2)
@@ -186,3 +195,32 @@ public static class Task11
         return Math.Sqrt(dx * dx + dy * dy);
     }
 }
+
+/*
+Решение с помощью алгоритма Дейкстры
+ 
+Определяется общее количество вершин в графе, включающее количество станций метро и две дополнительные точки (A и B).
+
+Создается список смежности для хранения графа, где для каждой вершины указывается список соседних вершин и вес ребра между ними.
+
+Добавляются ребра между станциями метро на основе заданных соединений. 
+Вес ребра определяется как время, необходимое для прохождения расстояния между станциями с учетом скорости метро.
+
+Добавляются ребра от точки A ко всем станциям метро и к точке B, а также от точки B ко всем станциям метро. 
+Вес этих ребер определяется как время, необходимое для прохождения расстояния между точками с учетом скорости ходьбы.
+
+Добавляется прямое ребро между точками A и B с весом, равным времени прохождения расстояния между ними с учетом скорости ходьбы.
+
+Выполняется алгоритм Дейкстры для поиска кратчайшего пути от точки A до точки B. 
+Для этого инициализируются массивы расстояний и предыдущих вершин, а также множество для отслеживания непосещенных вершин.
+
+В процессе работы алгоритма для каждой вершины обновляются минимальные расстояния до соседних вершин
+и сохраняется информация о предыдущих вершинах.
+
+После завершения алгоритма восстанавливается путь от точки B до точки A, используя массив предыдущих вершин.
+
+Возвращается время, необходимое для прохождения кратчайшего пути, и сам путь в виде массива вершин.
+
+Вспомогательная функция AddEdge добавляет ребро в граф, 
+а функция GetDistance вычисляет евклидово расстояние между двумя точками.
+*/

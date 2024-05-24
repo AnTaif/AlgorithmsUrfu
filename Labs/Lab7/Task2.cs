@@ -75,22 +75,21 @@ public static class Task2
                 for (var k = -1; k <= 1; k++)
                 {
                     var prevRow = i + k;
-                    if (prevRow >= 0 && prevRow < N)
-                    {
-                        var newCost = dp[prevRow, j - 1] + costs[i, j];
-                        if (newCost < dp[i, j] || (newCost == dp[i, j] && prevRow < path[i, j]))
-                        {
-                            dp[i, j] = newCost;
-                            path[i, j] = prevRow;
-                        }
-                    }
+                    if (prevRow < 0 || prevRow >= N) 
+                        continue;
+                    
+                    var newCost = dp[prevRow, j - 1] + costs[i, j];
+                    if (newCost >= dp[i, j] && (newCost != dp[i, j] || prevRow >= path[i, j])) 
+                        continue;
+                    
+                    dp[i, j] = newCost;
+                    path[i, j] = prevRow;
                 }
             }
         }
 
         var minCost = int.MaxValue;
         var lastCity = -1;
-        
         for (var i = 0; i < N; i++)
         {
             if (dp[i, M - 1] < minCost)

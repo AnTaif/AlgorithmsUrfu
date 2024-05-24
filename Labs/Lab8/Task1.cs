@@ -43,17 +43,16 @@ public static class Task1
         if (L > N) return "OOPS";
         
         var visited = new HashSet<(int, int, int)>();
-        var queue = new Queue<((int, int, int) state, int count)>();
+        var queue = new Lab3.Queue<((int, int, int) state, int count)>();
         
         // начальное состояние (В большой колбе N мл есть жидкости, маленькие пусты)
         queue.Enqueue(((0, 0, N), 0));
         visited.Add((0, 0, N));
         
+        // Поиск в ширину
         while (queue.Count > 0)
         {
-            var current = queue.Dequeue();
-            var state = current.state;
-            var count = current.count;
+            var (state, count) = queue.Dequeue();
 
             var big = state.Item3;
 
@@ -129,3 +128,16 @@ public static class Task1
         return nextStates;
     }
 }
+
+/*
+Метод поиска в ширину (Breadth-First Search).
+
+Проверяет, если L больше N, то вернуть "OOPS", так как невозможно получить больше жидкости, чем вмещает большая колба.
+Использует HashSet для отслеживания посещенных состояний, чтобы избежать повторного посещения.
+Использует очередь Queue для реализации BFS, начиная с начального состояния (0, 0, N) — большая колба заполнена, маленькие колбы пусты.
+Если большая колба содержит L мл жидкости, возвращает количество шагов.
+Генерирует следующие состояния с помощью метода GetNextStates
+
+Метод генерирует все возможные состояния, в которые можно перейти из текущего состояния, переливая жидкость между колбами.
+Список nextStates содержит возможные состояния после каждого возможного переливания.
+*/

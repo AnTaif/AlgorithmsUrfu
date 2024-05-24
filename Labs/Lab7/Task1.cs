@@ -35,17 +35,16 @@ public static class Task1
         // Заполнение массива динамического программирования
         for (var i = 1; i <= N; i++)
         {
-            // Определяем количество фишек, которое можно взять (целая часть квадратного корня)
             var maxTake = (int)Math.Sqrt(i);
             
             // Проверяем все возможные ходы
             for (var take = 1; take <= maxTake; take++)
             {
-                if (!dp[i - take])
-                {
-                    dp[i] = true;
-                    break;
-                }
+                if (dp[i - take]) 
+                    continue;
+                
+                dp[i] = true;
+                break;
             }
         }
 

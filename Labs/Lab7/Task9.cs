@@ -49,16 +49,10 @@ public static class Task9
         
         // Заполнение массива
         for (var i = 1; i <= MaxS; i++)
-        {
             for (var j = 2; j <= N; j++)
-            {
                 for (var k = 0; k <= N; k++)
-                {
                     if (i >= k)
                         dp[i, j] += dp[i - k, j - 1];
-                }
-            }
-        }
         
         // Добавляем 0 и максимальное значение 10^N
         dp[0, N] = 1;
